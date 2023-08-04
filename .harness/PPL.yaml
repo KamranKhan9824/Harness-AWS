@@ -30,10 +30,20 @@ pipeline:
                             type: Github
                             spec:
                               paths:
-                                - lab1.1.1.yaml
+                                - new.yml
                               connectorRef: newgit
                               gitFetchType: Branch
                               branch: main
                       roleArn: ""
+                      parameterOverrides:
+                        - name: BucketName
+                          value: <+pipeline.variable.Bucketname>
+                          type: String
                   timeout: 10m
         tags: {}
+  variables:
+    - name: BucketName
+      type: String
+      description: Enter the Bucketname
+      required: false
+      value: <+input>
