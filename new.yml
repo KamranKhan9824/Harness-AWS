@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "S3Templatecreating"
+Parameters:
+  BucketName:
+    Type: String
+    MinLength: 5
+    MaxLength: 12
+    Default: UApractise
+
+Resources:
+  MyS3NewBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
