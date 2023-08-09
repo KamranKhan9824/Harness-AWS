@@ -20,7 +20,7 @@ pipeline:
                   spec:
                     provisionerIdentifier: ABC
                     configuration:
-                      stackName: stackcreation
+                      stackName: firststack
                       connectorRef: AWSN
                       region: us-east-1
                       templateFile:
