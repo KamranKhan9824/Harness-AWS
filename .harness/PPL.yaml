@@ -20,7 +20,7 @@ pipeline:
                   spec:
                     provisionerIdentifier: ABC
                     configuration:
-                      stackName: secondstack
+                      stackName: stackcreation
                       connectorRef: AWSN
                       region: us-east-1
                       templateFile:
@@ -45,5 +45,10 @@ pipeline:
     - name: BucketName
       type: String
       description: Enter the Bucketname
+      required: false
+      value: <+input>
+    - name: NewBucket
+      type: String
+      description: ""
       required: false
       value: <+input>
