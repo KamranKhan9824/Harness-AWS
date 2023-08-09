@@ -47,8 +47,3 @@ pipeline:
       description: Enter the Bucketname
       required: false
       value: <+input>
-    - name: NewBucket
-      type: String
-      description: ""
-      required: false
-      value: <+input>
