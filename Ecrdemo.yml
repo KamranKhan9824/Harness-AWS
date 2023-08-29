@@ -4,4 +4,4 @@ Resources:
   MyECR:
     Type: AWS::ECR::Repository
     Properties:
-      BucketName: "ECR-test-repository"
+      RepositoryName: "ECR-test-repository"
