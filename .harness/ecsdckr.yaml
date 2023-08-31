@@ -1,0 +1,70 @@
+pipeline:
+  name: ecsdckr
+  identifier: ecsdckr
+  projectIdentifier: Harness1
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: ECS
+        identifier: ECS
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: CreateStack
+                  name: CreateStack_1
+                  identifier: CreateStack_1
+                  spec:
+                    provisionerIdentifier: Ecstry
+                    configuration:
+                      stackName: Ecstry1
+                      connectorRef: AWSN
+                      region: us-east-1
+                      templateFile:
+                        type: Remote
+                        spec:
+                          store:
+                            type: Github
+                            spec:
+                              paths:
+                                - ecs-harness.yml
+                              connectorRef: newgit
+                              gitFetchType: Branch
+                              branch: main
+                      roleArn: ""
+                      parameterOverrides:
+                        - name: Subnet1
+                          value: <+input>
+                          type: String
+                        - name: MinContainers
+                          value: <+input>
+                          type: String
+                        - name: Subnet2
+                          value: <+input>
+                          type: String
+                        - name: ContainerMemory
+                          value: <+input>
+                          type: String
+                        - name: ServiceName
+                          value: <+input>
+                          type: String
+                        - name: ContainerCpu
+                          value: <+input>
+                          type: String
+                        - name: ECSClusterName
+                          value: <+input>
+                          type: String
+                        - name: VPC
+                          value: <+input>
+                          type: String
+                        - name: ContainerPort
+                          value: <+input>
+                          type: String
+                        - name: ImageURI
+                          value: <+input>
+                          type: String
+                  timeout: 10m
+        tags: {}
