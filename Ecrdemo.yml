@@ -1,7 +1,14 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "Ecr repository"
+Description: "ECRTemplatecreating"
+Parameters:
+  RepositoryName: 
+    Default :  ' '
+    Type: String
 Resources:
-  MyRepository:
+  MyECR:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: "test-repository"
+      RepositoryName: !Ref RepositoryName
+Outputs:
+  RepositoryName: 
+    Value: !Ref RepositoryName
