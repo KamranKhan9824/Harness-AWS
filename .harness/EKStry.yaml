@@ -6,11 +6,32 @@ pipeline:
   tags: {}
   stages:
     - stage:
-        name: EKS-Infra
-        identifier: EKSInfra
+        name: Dev
+        identifier: Dev
         description: ""
-        type: Custom
+        type: Deployment
         spec:
+          deploymentType: Kubernetes
+          service:
+            serviceRef: EKSdckr
+          environment:
+            environmentRef: eksuseast2
+            environmentInputs:
+              identifier: eksuseast2
+              type: PreProduction
+              variables:
+                - name: subnetid1
+                  type: String
+                  value: <+input>
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: eksinfra
+                inputs:
+                  identifier: eksinfra
+                  type: KubernetesAws
+                  spec:
+                    cluster: <+input>
+                    namespace: <+input>
           execution:
             steps:
               - step:
@@ -18,9 +39,9 @@ pipeline:
                   name: CreateStack_1
                   identifier: CreateStack_1
                   spec:
-                    provisionerIdentifier: EKS
+                    provisionerIdentifier: eks
                     configuration:
-                      stackName: EKS-stack
+                      stackName: eks-try
                       connectorRef: AWSN
                       region: us-east-1
                       templateFile:
@@ -42,11 +63,18 @@ pipeline:
                         - name: SecurityGroup
                           value: <+input>
                           type: String
-                        - name: SubnetId1
-                          value: <+input>
-                          type: String
                         - name: SubnetId2
                           value: <+input>
                           type: String
-                  timeout: 10m
+                        - name: SubnetId1
+                          value: <+env.variables.subnetid1>
+                          type: String
+                  timeout: 20m
+            rollbackSteps: []
         tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
